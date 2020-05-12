@@ -6,18 +6,22 @@ services:
     build:
       context: ./
       dockerfile: app.dockerfile
-    working_dir: /var/www
+    working_dir: /var/www/blog
     volumes:
-      - ./:/var/www/
+      - ./:/var/www/blog
 
   # The Web Server
   web:
     build:
       context: ./
       dockerfile: web.dockerfile
-    working_dir: /var/www
+    working_dir: /var/www/blog
+    volumes:
+      - ./:/var/www/blog
+    links: 
+      - app
     ports:
-      - 80:80
+    - 80:80
 
   # The Database
   database:
