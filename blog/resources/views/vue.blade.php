@@ -3,7 +3,7 @@
 
 <head>
     <title>Laravel</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
     <link rel="stylesheet" type="text/css" href="/css/app.css">
 </head>
 

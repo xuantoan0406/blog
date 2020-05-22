@@ -7,6 +7,9 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+import ElementUI from "element-ui";
+Vue.use(ElementUI);
+import "element-ui/lib/theme-chalk/index.css";
 
 /**
  * The following block of code may be used to automatically register your
