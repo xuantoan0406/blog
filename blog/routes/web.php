@@ -13,16 +13,22 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('test', function () {
-    return view('test');
-});
+Route::get('/{any}', 'SpaController@home')->where('any', '.*');
 
-Auth::routes();
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('test', function () {
+//     return view('test');
+// });
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('vue', function () {
-    return view('vue');
-});
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('vue', function () {
+//     return view('vue');
+// });
+// Route::get('/kaopiz', function () {
+//     return view("kaopiz/test");
+// });
+Route::post('login', 'SpaController@login');

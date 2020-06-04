@@ -1,1 +1,31 @@
-
+.wrap {
+    background-color: #ffe67a;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .content {
+        width: 700px;
+        height: 400px;
+        img {
+            width: 100%;
+        }
+        .form-login {
+            width: 300px;
+            margin: 0 auto;
+            .support {
+                margin-top: 30px;
+            }
+        }
+    }
+}
+</style > <style lang="scss" > .wrap {
+    .el-form {
+        .el-form-item {
+            .el-form-item__label {
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+        }
+    }
+}
