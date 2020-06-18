@@ -14,7 +14,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="addModalLabel">NEW STORY</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -22,7 +27,12 @@
             <!-- <form> -->
             <div class="form-group">
               <label for="name" class="col-form-label">Name Story</label>
-              <input type="text" class="form-control" id="name" v-model="story.nameStory" />
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                v-model="story.nameStory"
+              />
             </div>
             <div class="form-group">
               <label class="col-form-label">author</label>
@@ -38,15 +48,25 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">timeUpdate</label>
-              <input type="text" class="form-control" v-model="story.timeUpdate" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="story.timeUpdate"
+              />
             </div>
             <div class="form-group">
               <label class="col-form-label">catelogy</label>
-              <input type="text" class="form-control" v-model="story.catelogy" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="story.catelogy"
+              />
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload Img</span>
+                <span class="input-group-text" id="inputGroupFileAddon01"
+                  >Upload Img</span
+                >
               </div>
               <div class="custom-file">
                 <input
@@ -56,14 +76,24 @@
                   aria-describedby="inputGroupFileAddon01"
                   @change="handleUploadFile"
                 />
-                <label class="custom-file-label" for="inputGroupFile01">Choose Img</label>
+                <label class="custom-file-label" for="inputGroupFile01"
+                  >Choose Img</label
+                >
               </div>
             </div>
             <!-- </form> -->
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="addStory">Add</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" @click="addStory">
+              Add
+            </button>
           </div>
         </div>
       </div>
@@ -83,19 +113,32 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="addModalLabel">EDIT STORY</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <!-- <form> -->
             <div class="form-group">
-              <label for="name" class="col-form-label">Name Story</label>
-              <input type="text" class="form-control" id="name" v-model="rowEdit.nameStory" />
+              <label class="col-form-label">Name Story</label>
+              <input
+                type="text"
+                class="form-control"
+                v-model="rowEdit.nameStory"
+              />
             </div>
             <div class="form-group">
               <label class="col-form-label">author</label>
-              <input type="text" class="form-control" v-model="rowEdit.author" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="rowEdit.author"
+              />
             </div>
             <div class="form-group">
               <label class="col-form-label">chap</label>
@@ -103,19 +146,33 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">status</label>
-              <input type="text" class="form-control" v-model="rowEdit.status" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="rowEdit.status"
+              />
             </div>
             <div class="form-group">
               <label class="col-form-label">timeUpdate</label>
-              <input type="text" class="form-control" v-model="rowEdit.timeUpdate" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="rowEdit.timeUpdate"
+              />
             </div>
             <div class="form-group">
               <label class="col-form-label">catelogy</label>
-              <input type="text" class="form-control" v-model="rowEdit.catelogy" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="rowEdit.catelogy"
+              />
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload Img</span>
+                <span class="input-group-text" id="inputGroupFileAddon01"
+                  >Upload Img</span
+                >
               </div>
               <div class="custom-file">
                 <input
@@ -125,14 +182,24 @@
                   aria-describedby="inputGroupFileAddon01"
                   @change="handleUploadFile"
                 />
-                <label class="custom-file-label" for="inputGroupFile01">Choose Img</label>
+                <label class="custom-file-label" for="inputGroupFile01"
+                  >Choose Img</label
+                >
               </div>
             </div>
             <!-- </form> -->
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="addStory">Add</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" @click="addStory">
+              Add
+            </button>
           </div>
         </div>
       </div>
@@ -151,7 +218,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Delete Status</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -159,13 +231,21 @@
             <p>Are you sure you want to delete ?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
             <button
               type="button"
               class="btn btn-primary"
               data-dismiss="modal"
-              @click="deleteStory(rowDelete,indexRowSelect)"
-            >Delete</button>
+              @click="deleteStory(rowDelete, indexRowSelect)"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -186,7 +266,13 @@
               <th>IMG</th>
               <th>TIME UPDATE</th>
               <th>
-                <button data-toggle="modal" data-target="#addModal" class="btn btn-primary">add</button>
+                <button
+                  data-toggle="modal"
+                  data-target="#addModal"
+                  class="btn btn-primary"
+                >
+                  add
+                </button>
               </th>
             </tr>
           </thead>
@@ -205,14 +291,18 @@
                   class="btn btn-success"
                   data-toggle="modal"
                   data-target="#editModal"
-                  @click="dataEdit(prod,index)"
-                >edit</button>
+                  @click="dataEdit(prod, index)"
+                >
+                  edit
+                </button>
                 <button
-                  @click="dataDelete(prod,index)"
+                  @click="dataDelete(prod, index)"
                   class="btn btn-danger"
                   data-toggle="modal"
                   data-target="#deleteStatus"
-                >delete</button>
+                >
+                  delete
+                </button>
               </td>
             </tr>
           </tbody>
@@ -340,7 +430,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .wrap-story {
   .overflow-auto {
     .pagination {

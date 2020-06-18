@@ -32,7 +32,8 @@ export const router = new VueRouter({
     },
     {
       path: "/admin/crudStories",
-      redirect: "/admin/crudStories/1"
+      redirect: "/admin/crudStories/1",
+      name: "crudStories1"
     },
     {
       path: "/admin/crudStories/:pageNumber",
