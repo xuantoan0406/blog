@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Str;
 
 class SpaController extends Controller
 {
@@ -26,6 +27,7 @@ class SpaController extends Controller
             'email' => $rq['email'],
             'password' => Hash::make($rq['password']),
         ]);
+
         return response()->json($user);
         // return response(
         //     ['user' => $user]
@@ -36,8 +38,16 @@ class SpaController extends Controller
     {
         $credentials = $rq->only('email', 'password');
         $stt = Auth::attempt($credentials);
+        if ($stt) {
+            $add_token = User::where('email', $rq['email']);
+            $add_token->update(['api_token' => Str::random(80)]);
 
-        return response()->json($stt);
+            // $User_tk->api_token = "Str::random(80)";
+            // $User_tk->save();
+            $User_tk = User::where('email', $rq['email'])->first();
+        }
+
+        return response()->json($User_tk);
     }
     public function user()
     {
@@ -50,6 +60,7 @@ class SpaController extends Controller
     }
     public function logout()
     {
+        dd(Auth::user());
         Auth::logout();
     }
 }

@@ -52,15 +52,8 @@ export default {
           password: this.user.password
         })
         .then(response => {
-          if (response.data == true) {
-            localStorage.setItem(
-              "email",
-              this.user.email,
-              "password",
-              this.user.password
-            );
-            this.$router.push("/");
-          } else alert("login fall");
+          console.log(response.data);
+          // this.$router.push("/home");
         })
         .catch(error => {
           console.log("fall");

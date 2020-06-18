@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
             "nameStory" => Str::random(10),
             "author" => Str::random(10) . '@gmail.com',
             "chap" => 20,
-            "status" => "chua",
+            "status" => "roi",
             "timeUpdate" => "2019/01/11",
-            "catelogy" => "dd"
+            "catelogy" => "dd",
+            "img" => '',
 
         ]);
     }

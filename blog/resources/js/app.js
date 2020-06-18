@@ -7,9 +7,17 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
-import ElementUI from "element-ui";
-Vue.use(ElementUI);
-import "element-ui/lib/theme-chalk/index.css";
+import Vue from "vue";
+// import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+// Vue.use(BootstrapVue);
+// Vue.use(IconsPlugin);
+// import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap-vue/dist/bootstrap-vue.css";
+import Paginate from "vuejs-paginate";
+Vue.component("paginate", Paginate);
+
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 /**
  * The following block of code may be used to automatically register your

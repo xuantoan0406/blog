@@ -12,48 +12,32 @@
 import NavBar from "../components/NavBar";
 export default {
   components: { NavBar },
-  data() {
-    return {
-      list_stories: ""
-    };
-  },
-  mounted() {
-    this.getStories();
-  },
-  methods: {
-    getStories() {
-      axios
-        .post("api/listStory")
-        .then(response => {
-          this.list_stories = response.data;
-        })
-        .catch(error => console.log("loi"));
-    }
-  }
+  mounted() {},
+  methods: {}
 };
 </script>
 
 
 <style lang="scss">
 .wrap {
-  height: 100vh;
+  height: auto;
 }
-.bg-primary {
-  background-color: #49a9eed1 !important ;
-}
-.mt-2,
-.my-2 {
-  color: black;
-}
-.mr-sm-2 {
-  width: 300px;
-}
-.mr-auto {
-  width: 300px;
-}
-.auth {
-  height: 39px;
-  width: 100px;
-  align-items: center;
-}
+// .bg-primary {
+//   background-color: #49a9eed1 !important ;
+// }
+// .mt-2,
+// .my-2 {
+//   color: black;
+// }
+// .mr-sm-2 {
+//   width: 300px;
+// }
+// .mr-auto {
+//   width: 300px;
+// }
+// .auth {
+//   height: 39px;
+//   width: 100px;
+//   align-items: center;
+// }
 </style>

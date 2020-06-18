@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoriesTable extends Migration
+class CreateChapsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateStoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('stories', function (Blueprint $table) {
+        Schema::create('chaps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("nameStory");
-            $table->string("author");
-            $table->integer("chap");
-            $table->string("status");
-            $table->date("timeUpdate");
-            $table->string("catelogy");
-            $table->string("img");
+            $table->integer('stories_id');
+            $table->integer('chap');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ class CreateStoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stories');
+        Schema::dropIfExists('chaps');
     }
 }

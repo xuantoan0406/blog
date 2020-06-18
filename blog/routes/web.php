@@ -31,4 +31,4 @@ Route::get('/{any}', 'SpaController@home')->where('any', '.*');
 // Route::get('/kaopiz', function () {
 //     return view("kaopiz/test");
 // });
-Route::post('login', 'SpaController@login');
+

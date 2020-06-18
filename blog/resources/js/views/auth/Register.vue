@@ -107,4 +107,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.error {
+  color: rgb(241, 14, 14);
+}
+</style>

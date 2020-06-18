@@ -19,7 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::resource('Story', 'StoryController');
+
+
 Route::post("listStory", "storyController@showStory");
 Route::delete('deleteStory/{$id}', "storyController@deleteStory");
 Route::post('register', 'SpaController@register');
 Route::post('login', 'SpaController@login');
+Route::post('logout', 'SpaController@logout');
