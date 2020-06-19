@@ -17,6 +17,8 @@ class CreateChapsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('stories_id');
             $table->integer('chap');
+            $table->longText('content');
+            $table->dateTime('timeUpdate');
             $table->timestamps();
         });
     }

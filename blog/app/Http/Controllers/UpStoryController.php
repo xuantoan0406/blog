@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Story;
 use Illuminate\Http\Request;
+use App\models\Chaps;
 
-class StoryController extends Controller
+class UpStoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class StoryController extends Controller
      */
     public function index()
     {
-        $listStories = Story::paginate(5);
-        return response()->json($listStories);
+        $listChaps = Chaps::paginate(5);
+        return response()->json($listChaps);
     }
 
     /**
@@ -25,6 +25,7 @@ class StoryController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -35,10 +36,7 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
-
-        $nameImg = $request->file->getClientOriginalName();
-        $request->file->move(public_path('imgs'), $nameImg);
-        return response()->json($nameImg);
+        //
     }
 
     /**
@@ -83,7 +81,7 @@ class StoryController extends Controller
      */
     public function destroy($id)
     {
-        $story = Story::find($id);
+        $story = Chaps::find($id);
         $story->delete();
         return response()->json('delete success');
     }

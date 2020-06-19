@@ -25,8 +25,14 @@ export const router = new VueRouter({
       name: "home",
       component: Home
     },
+
     {
-      path: "/admin/upStory",
+      path: "/admin/UpStory",
+      redirect: "/admin/UpStory/1",
+      name: "upStory1"
+    },
+    {
+      path: "/admin/UpStory/:pageNum",
       name: "upStory",
       component: UpStory
     },
