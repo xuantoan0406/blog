@@ -33,16 +33,25 @@
               <input type="text" class="form-control" v-model="story.chap" />
             </div>
             <div class="form-group">
-              <label class="col-form-label">status</label>
-              <input type="text" class="form-control" v-model="story.status" />
+              <label for="status" class="col-form-label">Choose category:</label>
+              <select id="status" v-model="story.status">
+                <option value="chua hoan thanh">chưa xong</option>
+                <option value="hoan thanh">xong</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="col-form-label">timeUpdate</label>
-              <input type="text" class="form-control" v-model="story.timeUpdate" />
+              <input type="date" class="form-control" v-model="story.timeUpdate" />
             </div>
             <div class="form-group">
-              <label class="col-form-label">catelogy</label>
-              <input type="text" class="form-control" v-model="story.catelogy" />
+              <label for="category" class="col-form-label">Choose category:</label>
+              <select id="category" v-model="story.catelogy">
+                <option value="ma">Truyện Ma</option>
+                <option value="trinhTham">Truyện Trinh Thám</option>
+                <option value="lichSu">Lịch Sử</option>
+                <option value="vienTuong">Viễn Tưởng</option>
+                <option value="teen">Viễn Tưởng</option>
+              </select>
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -98,20 +107,29 @@
               <input type="text" class="form-control" v-model="rowEdit.author" />
             </div>
             <div class="form-group">
-              <label class="col-form-label">chap</label>
+              <label class="col-form-label">Number chap</label>
               <input type="text" class="form-control" v-model="rowEdit.chap" />
             </div>
             <div class="form-group">
-              <label class="col-form-label">status</label>
-              <input type="text" class="form-control" v-model="rowEdit.status" />
+              <label for="status" class="col-form-label">Choose category:</label>
+              <select id="status" v-model="rowEdit.status">
+                <option value="chua hoan thanh">chưa xong</option>
+                <option value="hoan thanh">xong</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="col-form-label">timeUpdate</label>
-              <input type="text" class="form-control" v-model="rowEdit.timeUpdate" />
+              <input type="date" class="form-control" v-model="rowEdit.timeUpdate" />
             </div>
             <div class="form-group">
-              <label class="col-form-label">catelogy</label>
-              <input type="text" class="form-control" v-model="rowEdit.catelogy" />
+              <label for="category">Choose category:</label>
+              <select id="category" v-model="rowEdit.catelogy">
+                <option value="ma">Truyện Ma</option>
+                <option value="trinhTham">Truyện Trinh Thám</option>
+                <option value="lichSu">Lịch Sử</option>
+                <option value="vienTuong">Viễn Tưởng</option>
+                <option value="teen">Teen</option>
+              </select>
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -137,7 +155,7 @@
               type="button"
               class="btn btn-primary"
               data-dismiss="modal"
-              @click="editStory"
+              @click="editStory(indexRowSelect)"
             >Edit</button>
           </div>
         </div>
@@ -204,7 +222,9 @@
               <td>{{ prod.catelogy }}</td>
               <td>{{ prod.chap }}</td>
               <td>{{ prod.status }}</td>
-              <td>{{ prod.img }}</td>
+              <td>
+                <img :src="`/imgs/${prod.img}`" width="40%" alt />
+              </td>
               <td>{{ prod.timeUpdate }}</td>
               <td>
                 <button
@@ -317,31 +337,56 @@ export default {
     dataEdit(row, index) {
       this.rowEdit = row;
       this.indexRowSelect = index;
-      console.log(this.rowEdit);
-      console.log(this.indexRowSelect);
+      this.file.name = row.img;
     },
 
     handleUploadFile(e) {
       this.file = e.target.files[0];
-      console.log(this.file);
-      // axios.post("/api/Story", formData, {
-      // headers: {
-      //   "Content-Type": "multipart/form-data"
-      // }
-      // });
     },
     addStory() {
       let formData = new FormData();
       formData.append("file", this.file);
+      for (var key in this.story) {
+        formData.append(key, this.story[key]);
+      }
       axios
         .post("/api/Story", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(response => console.log(response.data));
+        .then(response => {
+          this.listStories.push(response.data);
+        });
     },
-    editStory() {}
+    editStory(indexRowSelect) {
+      let formData = new FormData();
+      formData.append("fileedit", this.file);
+      for (var key in this.rowEdit) {
+        formData.append(key, this.rowEdit[key]);
+      }
+      axios
+        .put("/api/Story/" + this.rowEdit.id, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(response => {
+          console.log("ok");
+        })
+        .catch(error => {
+          console.log("loi");
+        });
+
+      // .put("/api/Story/" + this.rowEdit.id, this.rowEdit)
+      // .then(response => {
+      //   console.log(response.data);
+      // this.rowEdit = response.data;
+      // this.rowEdit = this.rowEdit.data;
+      // this.listStories[indexRowSelect] = this.rowEdit;
+      // $("#editStory").modal("hide");
+      // })
+    }
   }
 };
 </script>

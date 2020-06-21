@@ -36,7 +36,14 @@ class UpStoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $story = Chaps::create([
+            'stories_id' => $request->stories_id,
+            'chap' => $request->chap,
+            'content' => $request->content,
+            'timeUpdate' => $request->timeUpdate,
+        ]);
+
+        return response()->json($story);
     }
 
     /**

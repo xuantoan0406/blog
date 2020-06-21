@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Chaps;
 use App\models\Story;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,16 @@ class StoryController extends Controller
 
         $nameImg = $request->file->getClientOriginalName();
         $request->file->move(public_path('imgs'), $nameImg);
-        return response()->json($nameImg);
+        $addStory = Story::create([
+            "nameStory" => $request->nameStory,
+            "author" => $request->author,
+            "chap" => $request->chap,
+            "status" => $request->status,
+            "catelogy" => $request->catelogy,
+            "timeUpdate" => $request->timeUpdate,
+            "img" => $nameImg
+        ]);
+        return response()->json($addStory);
     }
 
     /**
@@ -49,7 +59,8 @@ class StoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $story = Story::find($id);
+        return response()->json($story);
     }
 
     /**
@@ -60,7 +71,6 @@ class StoryController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -72,7 +82,22 @@ class StoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $nameImg = $request->file->getClientOriginalName();
+        $request->file->move(public_path('imgs'), $nameImg);
+
+        $story = Story::find($id);
+        $story->nameStory = $request->nameStory;
+        $story->author = $request->author;
+        $story->chap = $request->chap;
+        $story->status = $request->status;
+        $story->timeUpdate = $request->timeUpdate;
+        $story->catelogy = $request->catelogy;
+        $story->img = $nameImg;
+        $story->save();
+
+
+        return response()->json($story);
     }
 
     /**

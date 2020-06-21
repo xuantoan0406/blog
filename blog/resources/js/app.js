@@ -36,7 +36,7 @@ import "@fortawesome/fontawesome-free/js/all.js";
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import Home from "./components/Home";
-import { router } from "./router/router";
+import router from "./router/router";
 
 const app = new Vue({
   el: "#app",

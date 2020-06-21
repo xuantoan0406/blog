@@ -22,8 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('Story', 'StoryController');
 Route::resource('UpStory', 'UpStoryController');
 
+Route::get("listStory", "ListStoryController@show");
 
-Route::post("listStory", "storyController@showStory");
+
+
 Route::delete('deleteStory/{$id}', "storyController@deleteStory");
 Route::post('register', 'SpaController@register');
 Route::post('login', 'SpaController@login');

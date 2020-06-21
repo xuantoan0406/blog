@@ -30,17 +30,17 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">content</label>
-              <textarea type="text" class="form-control" rows="10" v-model="story.content"></textarea>
+              <input type="text" class="form-control" v-model="story.content" />
             </div>
             <div class="form-group">
               <label class="col-form-label">timeUpdate</label>
-              <input type="date" class="form-control" v-model="story.timeUpdate" />
+              <input type="text" class="form-control" v-model="story.timeUpdate" />
             </div>
             <!-- </form> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addStory">Add</button>
+            <button type="submit" class="btn btn-primary" @click="addStory">Add</button>
           </div>
         </div>
       </div>
@@ -86,12 +86,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-dismiss="modal"
-              @click="editStory(indexRowSelect)"
-            >Add</button>
+            <button type="button" class="btn btn-primary" @click="editStory">Add</button>
           </div>
         </div>
       </div>
@@ -109,7 +104,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Delete Chap</h5>
+            <h5 class="modal-title">Delete Status</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -264,13 +259,25 @@ export default {
       console.log(this.indexRowSelect);
     },
 
+    handleUploadFile(e) {
+      this.file = e.target.files[0];
+      console.log(this.file);
+      // axios.post("/api/Story", formData, {
+      // headers: {
+      //   "Content-Type": "multipart/form-data"
+      // }
+      // });
+    },
     addStory() {
+      let formData = new FormData();
+      formData.append("file", this.file);
       axios
-        .post("/api/UpStory", this.story)
-        .then(response => {
-          this.listChaps.push(response.data);
+        .post("/api/Story", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         })
-        .catch(error => console.log("loi"));
+        .then(response => console.log(response.data));
     },
     editStory() {}
   }
