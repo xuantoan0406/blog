@@ -41,6 +41,7 @@
             <a class="dropdown-item" href="#">Viễn Tưởng</a>
             <a class="dropdown-item" href="#">Truyện Teen</a>
             <a class="dropdown-item" href="#">Trinh Thám</a>
+            <a class="dropdown-item" href="#">Truyen Ma</a>
           </div>
         </li>
       </ul>
@@ -71,7 +72,6 @@
             <i class="far fa-user"></i> Thành Viên
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <router-link :to="{ name: 'upStory1' }" class="dropdown-item">Upload Story</router-link>
             <router-link :to="{ name: 'crudStories1' }" class="dropdown-item">Manage List Ltories</router-link>
           </div>
         </li>

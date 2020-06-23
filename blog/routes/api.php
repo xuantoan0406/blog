@@ -23,6 +23,7 @@ Route::resource('Story', 'StoryController');
 Route::resource('UpStory', 'UpStoryController');
 
 Route::get("listStory", "ListStoryController@show");
+Route::get('review/{$id}', 'ListStoryController@showReview');
 
 
 

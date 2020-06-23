@@ -20,7 +20,8 @@ export default {
 
 <style lang="scss">
 .wrap {
-  height: auto;
+  width: 100%;
+  height: 1300px;
 }
 // .bg-primary {
 //   background-color: #49a9eed1 !important ;

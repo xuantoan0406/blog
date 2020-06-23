@@ -1,21 +1,43 @@
 <template>
-  <div class="wrap-story">
+  <div class="wrap-a-story">
     <div class="img">
       <img :src="`/imgs/${story.img}`" width="200px" height="300px" alt />
     </div>
-    <div class="name">
-      <div>{{story.nameStory}}</div>
-      <div>Đọc Truyện</div>
-      <div>Giới Thiệu</div>
+    <div class="header-story">
+      <div class="name">{{story.nameStory}}</div>
+      <div class="read">
+        <router-link :to="{ name: 'ReadStory', params: { IdStory: story.id }}">ĐỌC TRUYỆN</router-link>
+      </div>
+      <div class="gt">GIỚI THIỆU</div>
     </div>
-    <div class="descriptions">
-      <div class="description">author :{{story.author}}</div>
-      <div class="description">số chương :{{story.chap}}</div>
-      <div class="description">status :{{story.status}}</div>
-      <div class="description">catelogy :{{story.catelogy}}</div>
-      <div class="description">timeUpdate :{{story.timeUpdate}}</div>
+    <div class="descriptionss">
+      <div class="description">
+        <i class="fas fa-pencil-ruler"></i>
+        &nbsp &nbsp &nbsp
+        <b>{{story.author}}</b>
+      </div>
+      <div class="description">
+        <i class="fas fa-sort-numeric-up"></i>
+        &nbsp &nbsp &nbsp
+        <b>{{story.chap}}</b>
+      </div>
+      <div class="description">
+        <i class="fas fa-thermometer-quarter"></i>
+        &nbsp &nbsp &nbsp
+        <b>{{story.status}}</b>
+      </div>
+      <div class="description">
+        <i class="fas fa-paw"></i>
+        &nbsp &nbsp &nbsp
+        <b>{{story.catelogy}}</b>
+      </div>
+      <div class="description">
+        <i class="fas fa-clock"></i>
+        &nbsp &nbsp &nbsp
+        <b>{{story.timeUpdate}}</b>
+      </div>
     </div>
-    <div class="content">dsadsad</div>
+    <div class="contentt" v-html="story.review"></div>
   </div>
 </template>
 
@@ -32,7 +54,6 @@ export default {
   },
   methods: {
     showStory() {
-      console.log(this.idStory);
       axios
         .get("/api/Story/" + this.idStory)
         .then(response => {
@@ -46,32 +67,51 @@ export default {
 </script>
 
 <style lang="scss">
-.wrap-story {
-  width: 900px;
+.wrap-a-story {
+  width: 1200px;
   margin-left: 5%;
   margin-top: 3%;
-  background-color: rgb(28, 206, 206);
   .img {
     float: left;
   }
-  .name {
+  .header-story {
+    .name {
+      margin-top: 10px;
+      font-size: 30px;
+      color: red;
+    }
+    .read {
+      font-size: 30px;
+      margin-top: 20px;
+    }
+    .gt {
+      font-size: 30px;
+      margin-top: 50px;
+    }
     float: left;
     text-align: center;
     margin-left: 100px;
-    width: 600px;
+    width: 900px;
     height: 300px;
-    background-color: burlywood;
+    background-color: rgb(185, 240, 228);
   }
-  .descriptions {
+  .descriptionss {
+    .description {
+      font-size: 15px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
     float: left;
-    width: 260px;
-    background-color: cornflowerblue;
+    width: 200px;
+    background-color: rgba(193, 241, 170, 0.863);
     margin-top: 20px;
   }
-  .content {
-    background-color: cyan;
-    margin-left: 40px;
-    width: 600px;
+  .contentt {
+    padding-left: 10px;
+    background-color: rgb(229, 238, 238);
+    font-size: 20px;
+    margin-left: 100px;
+    width: 900px;
     margin-top: 20px;
     float: left;
   }

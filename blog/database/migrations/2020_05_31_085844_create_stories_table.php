@@ -21,6 +21,7 @@ class CreateStoriesTable extends Migration
             $table->string("status");
             $table->date("timeUpdate");
             $table->string("catelogy");
+            $table->longText("review");
             $table->string("img");
             $table->timestamps();
         });

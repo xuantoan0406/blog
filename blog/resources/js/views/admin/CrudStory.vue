@@ -25,6 +25,10 @@
               <input type="text" class="form-control" id="name" v-model="story.nameStory" />
             </div>
             <div class="form-group">
+              <label class="col-form-label">Review</label>
+              <textarea type="text" class="form-control" rows="10" v-model="story.review"></textarea>
+            </div>
+            <div class="form-group">
               <label class="col-form-label">author</label>
               <input type="text" class="form-control" v-model="story.author" />
             </div>
@@ -46,11 +50,11 @@
             <div class="form-group">
               <label for="category" class="col-form-label">Choose category:</label>
               <select id="category" v-model="story.catelogy">
-                <option value="ma">Truyện Ma</option>
-                <option value="trinhTham">Truyện Trinh Thám</option>
-                <option value="lichSu">Lịch Sử</option>
-                <option value="vienTuong">Viễn Tưởng</option>
-                <option value="teen">Viễn Tưởng</option>
+                <option value="Ma">Truyện Ma</option>
+                <option value="Trinh Tham">Truyện Trinh Thám</option>
+                <option value="Lich Su">Lịch Sử</option>
+                <option value="Vien Tuong">Viễn Tưởng</option>
+                <option value="Ngon Tinh">Ngôn Tình</option>
               </select>
             </div>
             <div class="input-group mb-3">
@@ -97,7 +101,6 @@
             </button>
           </div>
           <div class="modal-body">
-            <!-- <form> -->
             <div class="form-group">
               <label class="col-form-label">Name Story</label>
               <input type="text" class="form-control" v-model="rowEdit.nameStory" />
@@ -110,8 +113,13 @@
               <label class="col-form-label">Number chap</label>
               <input type="text" class="form-control" v-model="rowEdit.chap" />
             </div>
+
             <div class="form-group">
-              <label for="status" class="col-form-label">Choose category:</label>
+              <label class="col-form-label">Review Story</label>
+              <textarea type="text" class="form-control" rows="5" v-model="rowEdit.review"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="status" class="col-form-label">Status :</label>
               <select id="status" v-model="rowEdit.status">
                 <option value="chua hoan thanh">chưa xong</option>
                 <option value="hoan thanh">xong</option>
@@ -124,30 +132,13 @@
             <div class="form-group">
               <label for="category">Choose category:</label>
               <select id="category" v-model="rowEdit.catelogy">
-                <option value="ma">Truyện Ma</option>
-                <option value="trinhTham">Truyện Trinh Thám</option>
-                <option value="lichSu">Lịch Sử</option>
-                <option value="vienTuong">Viễn Tưởng</option>
-                <option value="teen">Teen</option>
+                <option value="Ma">Truyện Ma</option>
+                <option value="Trinh Tham">Truyện Trinh Thám</option>
+                <option value="Lich Su">Lịch Sử</option>
+                <option value="Vien Tuong">Viễn Tưởng</option>
+                <option value="Ngon Tinh">Ngôn Tình</option>
               </select>
             </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload Img</span>
-              </div>
-              <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  id="inputGroupFile01"
-                  aria-describedby="inputGroupFileAddon01"
-                  @change="handleUploadFile"
-                  ref="file"
-                />
-                <label class="custom-file-label" for="inputGroupFile01">{{file.name}}</label>
-              </div>
-            </div>
-            <!-- </form> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -217,13 +208,17 @@
           <tbody class="t-body">
             <tr v-for="(prod, index) in listStories" :key="prod.id">
               <td>{{ prod.id }}</td>
-              <td>{{ prod.nameStory }}</td>
+              <td>
+                <router-link
+                  :to="{ name: 'upStory' ,params: { IdStory: prod.id } }"
+                >{{ prod.nameStory }}</router-link>
+              </td>
               <td>{{ prod.author }}</td>
               <td>{{ prod.catelogy }}</td>
               <td>{{ prod.chap }}</td>
               <td>{{ prod.status }}</td>
               <td>
-                <img :src="`/imgs/${prod.img}`" width="40%" alt />
+                <img :src="`/imgs/${prod.img}`" height="100px" alt />
               </td>
               <td>{{ prod.timeUpdate }}</td>
               <td>
@@ -281,6 +276,7 @@ export default {
         status: "",
         timeUpdate: "",
         catelogy: "",
+        review: "",
         img: ""
       },
       pageNumber: Number(this.$route.params.pageNumber), // page so bao nhieu
@@ -337,7 +333,6 @@ export default {
     dataEdit(row, index) {
       this.rowEdit = row;
       this.indexRowSelect = index;
-      this.file.name = row.img;
     },
 
     handleUploadFile(e) {
@@ -356,21 +351,13 @@ export default {
           }
         })
         .then(response => {
+          console.log(response.data);
           this.listStories.push(response.data);
         });
     },
     editStory(indexRowSelect) {
-      let formData = new FormData();
-      formData.append("fileedit", this.file);
-      for (var key in this.rowEdit) {
-        formData.append(key, this.rowEdit[key]);
-      }
       axios
-        .put("/api/Story/" + this.rowEdit.id, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
+        .put("/api/Story/" + this.rowEdit.id, this.rowEdit)
         .then(response => {
           console.log("ok");
         })

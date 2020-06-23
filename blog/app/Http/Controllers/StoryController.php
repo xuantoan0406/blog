@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\models\Chaps;
 use App\models\Story;
+use \App\models\ReviewStory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StoryController extends Controller
 {
@@ -15,7 +17,7 @@ class StoryController extends Controller
      */
     public function index()
     {
-        $listStories = Story::paginate(5);
+        $listStories = Story::paginate(4);
         return response()->json($listStories);
     }
 
@@ -46,8 +48,10 @@ class StoryController extends Controller
             "status" => $request->status,
             "catelogy" => $request->catelogy,
             "timeUpdate" => $request->timeUpdate,
+            "review" => $request->review,
             "img" => $nameImg
         ]);
+
         return response()->json($addStory);
     }
 
@@ -59,6 +63,7 @@ class StoryController extends Controller
      */
     public function show($id)
     {
+
         $story = Story::find($id);
         return response()->json($story);
     }
@@ -83,8 +88,7 @@ class StoryController extends Controller
     public function update(Request $request, $id)
     {
 
-        $nameImg = $request->file->getClientOriginalName();
-        $request->file->move(public_path('imgs'), $nameImg);
+
 
         $story = Story::find($id);
         $story->nameStory = $request->nameStory;
@@ -93,7 +97,7 @@ class StoryController extends Controller
         $story->status = $request->status;
         $story->timeUpdate = $request->timeUpdate;
         $story->catelogy = $request->catelogy;
-        $story->img = $nameImg;
+        $story->img = $request->img;
         $story->save();
 
 

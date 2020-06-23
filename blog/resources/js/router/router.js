@@ -7,6 +7,7 @@ import Home from "../views/Home";
 import CrudStories from "../views/admin/CrudStory";
 import UpStory from "../views/admin/Story";
 import aStory from "../views/user/AStory.vue";
+import ChapStory from "../views/user/ChapStory.vue";
 const router = new VueRouter({
   mode: "history",
   routes: [
@@ -31,12 +32,12 @@ const router = new VueRouter({
       component: aStory
     },
     {
-      path: "/admin/UpStory",
-      redirect: "/admin/UpStory/1",
-      name: "upStory1"
+      path: "/ReadStory/:IdStory",
+      name: "ReadStory",
+      component: ChapStory
     },
     {
-      path: "/admin/UpStory/:pageNum",
+      path: "/admin/UpStory/:IdStory",
       name: "upStory",
       component: UpStory
     },

@@ -19,11 +19,6 @@
             </button>
           </div>
           <div class="modal-body">
-            <!-- <form> -->
-            <div class="form-group">
-              <label for="name" class="col-form-label">stories_id</label>
-              <input type="text" class="form-control" id="name" v-model="story.stories_id" />
-            </div>
             <div class="form-group">
               <label class="col-form-label">chap</label>
               <input type="text" class="form-control" v-model="story.chap" />
@@ -80,7 +75,7 @@
             </div>
             <div class="form-group">
               <label class="col-form-label">timeUpdate</label>
-              <input type="text" class="form-control" v-model="rowEdit.timeUpdate" />
+              <input type="date" class="form-control" v-model="rowEdit.timeUpdate" />
             </div>
             <!-- </form> -->
           </div>
@@ -136,7 +131,6 @@
         <table class="table table-bordered">
           <thead class="t-head">
             <tr>
-              <th>STORY ID</th>
               <th>CHAP</th>
               <th>CONTENT</th>
               <th>TIME UPDATE</th>
@@ -147,7 +141,6 @@
           </thead>
           <tbody class="t-body">
             <tr v-for="(prod, index) in listChaps" :key="prod.id">
-              <td>{{ prod.stories_id }}</td>
               <td>{{ prod.chap }}</td>
               <td class="content">{{ prod.content }}</td>
               <td>{{ prod.timeUpdate }}</td>
@@ -200,12 +193,12 @@ export default {
       listChapsFull: [],
       listChaps: [],
       story: {
-        stories_id: "",
+        stories_id: Number(this.$route.params.IdStory),
         chap: "",
         content: "",
         timeUpdate: ""
       },
-      pageNum: Number(this.$route.params.pageNum), // page so bao nhieu
+      pageNum: 1, // page so bao nhieu
       numberPage: 1, // so trang
 
       rowDelete: [],
@@ -223,17 +216,17 @@ export default {
   methods: {
     clickCallback(pageNum) {
       this.pageNum = Number(pageNum);
-      axios.get("/api/UpStory?page=" + pageNum).then(response => {
-        this.listChapsFull = response.data;
-        this.listChaps = this.listChapsFull.data;
-      });
-
-      this.$router.push("/admin/UpStory/" + pageNum);
+      axios
+        .get("/api/UpStory/" + this.story.stories_id + "?page=" + pageNum)
+        .then(response => {
+          this.listChapsFull = response.data;
+          this.listChaps = this.listChapsFull.data;
+        });
     },
 
     getListStories() {
       axios
-        .get("/api/UpStory?page=" + this.pageNum)
+        .get("/api/UpStory/" + this.story.stories_id + "?page=" + this.pageNum)
         .then(response => {
           this.listChapsFull = response.data;
           this.listChaps = this.listChapsFull.data;
@@ -260,8 +253,6 @@ export default {
     dataEdit(row, index) {
       this.rowEdit = row;
       this.indexRowSelect = index;
-      console.log(this.rowEdit);
-      console.log(this.indexRowSelect);
     },
 
     addStory() {
@@ -272,7 +263,16 @@ export default {
         })
         .catch(error => console.log("loi"));
     },
-    editStory() {}
+    editStory(indexRowSelect) {
+      axios
+        .put("/api/UpStory/" + this.rowEdit.id, this.rowEdit)
+        .then(response => {
+          console.log("ok");
+        })
+        .catch(error => {
+          console.log("loi");
+        });
+    }
   }
 };
 </script>

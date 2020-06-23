@@ -14,6 +14,7 @@ class UpStoryController extends Controller
      */
     public function index()
     {
+
         $listChaps = Chaps::paginate(5);
         return response()->json($listChaps);
     }
@@ -54,7 +55,8 @@ class UpStoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $story = Chaps::where('stories_id', $id)->paginate(1);
+        return response()->json($story);
     }
 
     /**
@@ -65,7 +67,6 @@ class UpStoryController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -77,7 +78,12 @@ class UpStoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $story = Chaps::find($id);
+        $story->chap = $request->chap;
+        $story->content = $request->content;
+        $story->timeUpdate = $request->timeUpdate;
+        $story->save();
+        return response()->json($story);
     }
 
     /**
