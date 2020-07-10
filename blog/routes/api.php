@@ -22,9 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('Story', 'StoryController');
 Route::resource('UpStory', 'UpStoryController');
 
+Route::post("category", "ListStoryController@category");
 Route::get("listStory", "ListStoryController@show");
 Route::get('review/{$id}', 'ListStoryController@showReview');
-
+Route::post("comment", "ListStoryController@comment")->middleware('auth:api');
 
 
 Route::delete('deleteStory/{$id}', "storyController@deleteStory");

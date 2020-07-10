@@ -17,7 +17,9 @@ import Paginate from "vuejs-paginate";
 Vue.component("paginate", Paginate);
 
 import "@fortawesome/fontawesome-free/css/all.css";
-import "@fortawesome/fontawesome-free/js/all.js";
+// import "@fortawesome/fontawesome-free/js/all.js";
+
+import store from "./store/store";
 
 /**
  * The following block of code may be used to automatically register your
@@ -42,5 +44,6 @@ const app = new Vue({
   el: "#app",
   render: h => h(Home),
 
-  router: router
+  router: router,
+  store: store
 });

@@ -18,7 +18,7 @@
                 <input type="password" class="form-control" v-model="user.password" />
               </div>
             </div>
-
+            <div v-if="error" class="error">{{error}}</div>
             <div class="form-group row mb-0">
               <div class="col-md-6 offset-md-4">
                 <button type="submit" class="btn btn-primary" @click="login">Login</button>
@@ -39,12 +39,18 @@ export default {
         email: "",
         password: ""
       },
-      error: []
+      error: ""
     };
   },
   computed: {},
+  mounted() {
+    this.checkLogin();
+  },
 
   methods: {
+    checkLogin() {
+      if (localStorage.getItem("userName")) this.$router.push("/");
+    },
     login() {
       axios
         .post("api/login", {
@@ -53,14 +59,25 @@ export default {
         })
         .then(response => {
           console.log(response.data);
-          // this.$router.push("/home");
+          localStorage.setItem("token", response.data.user.api_token);
+          localStorage.setItem("userId", response.data.user.id);
+          localStorage.setItem("userEmail", response.data.user.email);
+          localStorage.setItem("userName", response.data.user.name);
+          this.$router.push("/");
+          this.$store.dispatch("updateName", localStorage.getItem("userName"));
         })
         .catch(error => {
-          console.log("fall");
+          this.error = "Tài khoản hoặc mật khẩu k đúng";
         });
     }
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.error {
+  color: red;
+  margin-left: 35%;
+  margin-bottom: 3%;
+}
+</style>

@@ -26,6 +26,16 @@
           :hide-prev-next="true"
         />
       </div>
+      <div class="comment">
+        <hr size="5px" color="red" />
+        <div>Comment</div>
+        <div>
+          <textarea type="text" rows="3" v-model="comment.post"></textarea>
+          <div>
+            <button @click="addComment" class="btn btn-danger">Comment</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +44,12 @@
 export default {
   data() {
     return {
+      comment: {
+        post: "",
+        user_id: 3,
+        date: 2004 - 12 - 12,
+        stories_id: Number(this.$route.params.IdStory)
+      },
       stories_id: Number(this.$route.params.IdStory),
       dataChapsFull: [],
       dataChap: [],
@@ -43,6 +59,7 @@ export default {
   },
   mounted() {
     this.readStory();
+    console.log(this.comment.date);
   },
   methods: {
     clickCallback(pageNum) {
@@ -62,9 +79,16 @@ export default {
           this.dataChapsFull = response.data;
           this.dataChap = this.dataChapsFull.data[0];
           this.numberPage = this.dataChapsFull.last_page;
-          console.log(this.dataChapsFull);
         })
         .catch(error => error.response.data);
+    },
+    addComment() {
+      axios
+        .post("/api/comment", this.comment)
+        .then(response => console.log("ok"))
+        .catch(error => {
+          console.log("fall");
+        });
     }
   }
 };

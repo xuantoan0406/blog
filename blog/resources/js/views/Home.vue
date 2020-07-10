@@ -32,10 +32,12 @@
         :hide-prev-next="true"
       />
     </div>
+    <div>{{category}}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -46,6 +48,10 @@ export default {
       numberPage: 2
     };
   },
+  computed: {
+    ...mapState(["category"])
+  },
+
   mounted() {
     this.dataListStories();
   },
@@ -58,6 +64,9 @@ export default {
       this.pageNum = Number(pageNum);
     },
     dataListStories() {
+      if (this.category) {
+        this.listStories = this.category;
+      }
       axios
         .get("/api/listStory?page=" + this.pageNum)
         .then(response => {
@@ -95,7 +104,7 @@ export default {
       float: left;
       width: 250px;
       height: 350px;
-      margin-left: 20px;
+      margin-left: 66px;
       margin-top: 20px;
       .name {
         margin-top: 10px;

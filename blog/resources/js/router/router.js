@@ -39,37 +39,39 @@ const router = new VueRouter({
     {
       path: "/admin/UpStory/:IdStory",
       name: "upStory",
-      component: UpStory
+      component: UpStory,
+      meta: { requiresAuth: true }
     },
     {
       path: "/admin/crudStories",
       redirect: "/admin/crudStories/1",
-      name: "crudStories1"
+      name: "crudStories1",
+      meta: { requiresAuth: true }
     },
     {
       path: "/admin/crudStories/:pageNumber",
       name: "crudStories",
-      // meta: { requiresAuth: true },
+      meta: { requiresAuth: true },
       component: CrudStories
     }
   ]
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     // this route requires auth, check if logged in
-//     // if not, redirect to login page.
-//     if (!auth.loggedIn()) {
-//       next({
-//         path: '/login',
-//         query: { redirect: to.fullPath }
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next() // make sure to always call next()!
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!localStorage.getItem("token")) {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
 
 export default router;

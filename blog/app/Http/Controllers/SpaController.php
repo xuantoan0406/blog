@@ -34,33 +34,12 @@ class SpaController extends Controller
         // );
 
     }
-    public function login(Request $rq)
-    {
-        $credentials = $rq->only('email', 'password');
-        $stt = Auth::attempt($credentials);
-        if ($stt) {
-            $add_token = User::where('email', $rq['email']);
-            $add_token->update(['api_token' => Str::random(80)]);
 
-            // $User_tk->api_token = "Str::random(80)";
-            // $User_tk->save();
-            $User_tk = User::where('email', $rq['email'])->first();
+    public function login(Request $request)
+    {
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->user()->forceFill(['api_token' => Str::random(80)])->save();
         }
-
-        return response()->json($User_tk);
-    }
-    public function user()
-    {
-        $check = Auth::check();
-        if ($check)
-            $user = Auth::user();
-        else
-            $user = '';
-        return response()->json($user);
-    }
-    public function logout()
-    {
-        dd(Auth::user());
-        Auth::logout();
+        return response(['user' => $request->user()]);
     }
 }
