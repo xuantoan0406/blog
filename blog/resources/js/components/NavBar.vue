@@ -49,6 +49,7 @@
           </ul>
           <ul class="navbar-nav mr-auto" style="margin-left:1%">
             <input
+              v-model="search"
               class="form-control mr-sm-2"
               type="search"
               placeholder="Search"
@@ -57,6 +58,7 @@
             />
 
             <button
+              @click="searchStory"
               class="btn btn-outline-success my-2 my-sm-0"
               style="color: #faff00;"
               type="submit"
@@ -74,11 +76,13 @@
                 {{userName}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <router-link
-                  :to="{ name: 'crudStories1' }"
-                  class="dropdown-item"
-                  style="margin-bottom:4px"
-                >Manage List Ltories</router-link>
+                <div v-if="userName=='admin'">
+                  <router-link
+                    :to="{ name: 'crudStories1' }"
+                    class="dropdown-item"
+                    style="margin-bottom:4px"
+                  >Manage List Ltories</router-link>
+                </div>
                 <button class="logout" style="margin-left:15%" @click="logout">logout</button>
               </div>
             </li>
@@ -108,7 +112,8 @@ export default {
   data() {
     return {
       list: "",
-      user: ""
+      user: "",
+      search: ""
     };
   },
   mounted() {
@@ -116,13 +121,23 @@ export default {
     this.$store.dispatch("updateName", localStorage.getItem("userName"));
   },
   methods: {
+    searchStory() {
+      axios
+        .post("/api/search", { search: this.search })
+        .then(respose => {
+          this.$store.dispatch("showSearch", respose.data.data);
+          this.$router.push("/");
+        })
+        .catch(error => console.log("loi"));
+    },
+
     showCategory(category) {
       axios
         .post("/api/category", { category: category })
         .then(respose => {
           this.list = respose.data;
           this.$store.dispatch("showCategory", respose.data.data);
-          console.log(this.list);
+          this.$router.push("/");
         })
         .catch(error => console.log("loi"));
     },

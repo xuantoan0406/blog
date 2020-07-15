@@ -26,8 +26,8 @@
           :hide-prev-next="true"
         />
       </div>
-      <div class="comment">
-        <hr size="5px" color="red" />
+      <hr size="5px" color="red" />
+      <div class="comment" v-if="comment.user_id">
         <div>Comment</div>
         <div>
           <textarea type="text" rows="3" v-model="comment.post"></textarea>
@@ -35,6 +35,15 @@
             <button @click="addComment" class="btn btn-danger">Comment</button>
           </div>
         </div>
+      </div>
+
+      <div v-for="prod in listComment" :key="prod.id">
+        <div class="name">
+          <i class="far fa-user"></i>
+          {{prod.name}}
+        </div>
+
+        <div class="post">{{prod.post}}</div>
       </div>
     </div>
   </div>
@@ -46,10 +55,11 @@ export default {
     return {
       comment: {
         post: "",
-        user_id: 3,
+        user_id: localStorage.getItem("userId"),
         date: 2004 - 12 - 12,
         stories_id: Number(this.$route.params.IdStory)
       },
+      listComment: [],
       stories_id: Number(this.$route.params.IdStory),
       dataChapsFull: [],
       dataChap: [],
@@ -60,8 +70,18 @@ export default {
   mounted() {
     this.readStory();
     console.log(this.comment.date);
+    this.showComment();
   },
   methods: {
+    showComment() {
+      axios
+        .post("/api/showComment", { stories_id: this.stories_id })
+        .then(response => {
+          this.listComment = response.data;
+          console.log(this.listComment);
+        });
+    },
+
     clickCallback(pageNum) {
       this.pageNum = Number(pageNum);
       axios
@@ -85,7 +105,10 @@ export default {
     addComment() {
       axios
         .post("/api/comment", this.comment)
-        .then(response => console.log("ok"))
+        .then(response => {
+          this.showComment();
+          this.listChaps.push();
+        })
         .catch(error => {
           console.log("fall");
         });
@@ -97,6 +120,16 @@ export default {
 <style lang="scss">
 .wrap-chap {
   .content-story {
+    .post {
+      margin-left: 8%;
+    }
+    .name {
+      margin-top: 2%;
+      color: #337ab7;
+    }
+    .comment {
+      font-size: 0.7em;
+    }
     .pagination {
       justify-content: center;
       display: flex;

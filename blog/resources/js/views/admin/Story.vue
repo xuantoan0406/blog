@@ -1,187 +1,193 @@
 <template>
   <div class="wrap-story">
     <!-- modal add chap-->
-
-    <div
-      class="modal fade"
-      id="addModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addModal"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addModalLabel">UP NEW CHAP STORY</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="col-form-label">chap</label>
-              <input type="text" class="form-control" v-model="story.chap" />
+    <div v-if="userName=='admin'">
+      <div
+        class="modal fade"
+        id="addModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addModal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addModalLabel">UP NEW CHAP STORY</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="form-group">
-              <label class="col-form-label">content</label>
-              <textarea type="text" class="form-control" rows="10" v-model="story.content"></textarea>
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="col-form-label">chap</label>
+                <input type="text" class="form-control" v-model="story.chap" />
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">content</label>
+                <textarea type="text" class="form-control" rows="10" v-model="story.content"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">timeUpdate</label>
+                <input type="date" class="form-control" v-model="story.timeUpdate" />
+              </div>
+              <!-- </form> -->
             </div>
-            <div class="form-group">
-              <label class="col-form-label">timeUpdate</label>
-              <input type="date" class="form-control" v-model="story.timeUpdate" />
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                @click="addStory"
+              >Add</button>
             </div>
-            <!-- </form> -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" data-dismiss="modal" @click="addStory">Add</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- modal edit-->
+      <!-- modal edit-->
 
-    <div
-      class="modal fade"
-      id="editModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addModal"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addModalLabel">EDIT CHAP STORY</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- <form> -->
-            <div class="form-group">
-              <label class="col-form-label">stories_id</label>
-              <input type="text" class="form-control" v-model="rowEdit.stories_id" />
+      <div
+        class="modal fade"
+        id="editModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addModal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addModalLabel">EDIT CHAP STORY</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="form-group">
-              <label class="col-form-label">chap</label>
-              <input type="text" class="form-control" v-model="rowEdit.chap" />
+            <div class="modal-body">
+              <!-- <form> -->
+              <div class="form-group">
+                <label class="col-form-label">stories_id</label>
+                <input type="text" class="form-control" v-model="rowEdit.stories_id" />
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">chap</label>
+                <input type="text" class="form-control" v-model="rowEdit.chap" />
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">content</label>
+                <textarea type="text" class="form-control" rows="10" v-model="rowEdit.content"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">timeUpdate</label>
+                <input type="date" class="form-control" v-model="rowEdit.timeUpdate" />
+              </div>
+              <!-- </form> -->
             </div>
-            <div class="form-group">
-              <label class="col-form-label">content</label>
-              <textarea type="text" class="form-control" rows="10" v-model="rowEdit.content"></textarea>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                @click="editStory(indexRowSelect)"
+              >Add</button>
             </div>
-            <div class="form-group">
-              <label class="col-form-label">timeUpdate</label>
-              <input type="date" class="form-control" v-model="rowEdit.timeUpdate" />
-            </div>
-            <!-- </form> -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-dismiss="modal"
-              @click="editStory(indexRowSelect)"
-            >Add</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <!--        confirm delete-->
-    <div
-      id="deleteStatus"
-      class="modal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="deleteStatus"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Delete Chap</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Are you sure you want to delete ?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-dismiss="modal"
-              @click="deleteStory(rowDelete, indexRowSelect)"
-            >Delete</button>
+      <!--        confirm delete-->
+      <div
+        id="deleteStatus"
+        class="modal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="deleteStatus"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Delete Chap</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                @click="deleteStory(rowDelete, indexRowSelect)"
+              >Delete</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="list-products">
-      <div class="title">LIST CHAPS STORIES</div>
-      <div class="product-table">
-        <table class="table table-bordered">
-          <thead class="t-head">
-            <tr>
-              <th>CHAP</th>
-              <th>CONTENT</th>
-              <th>TIME UPDATE</th>
-              <th>
-                <button data-toggle="modal" data-target="#addModal" class="btn btn-primary">add</button>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="t-body">
-            <tr v-for="(prod, index) in listChaps" :key="prod.id">
-              <td>{{ prod.chap }}</td>
-              <td class="content">{{ prod.content }}</td>
-              <td>{{ prod.timeUpdate }}</td>
-              <td>
-                <button
-                  class="btn btn-success"
-                  data-toggle="modal"
-                  data-target="#editModal"
-                  @click="dataEdit(prod, index)"
-                >edit</button>
-                <button
-                  @click="dataDelete(prod, index)"
-                  class="btn btn-danger"
-                  data-toggle="modal"
-                  data-target="#deleteStatus"
-                >delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div class="list-products">
+        <div class="title">LIST CHAPS STORIES</div>
+        <div class="product-table">
+          <table class="table table-bordered">
+            <thead class="t-head">
+              <tr>
+                <th>CHAP</th>
+                <th>CONTENT</th>
+                <th>TIME UPDATE</th>
+                <th>
+                  <button data-toggle="modal" data-target="#addModal" class="btn btn-primary">add</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="t-body">
+              <tr v-for="(prod, index) in listChaps" :key="prod.id">
+                <td>{{ prod.chap }}</td>
+                <td class="content">{{ prod.content }}</td>
+                <td>{{ prod.timeUpdate }}</td>
+                <td>
+                  <button
+                    class="btn btn-success"
+                    data-toggle="modal"
+                    data-target="#editModal"
+                    @click="dataEdit(prod, index)"
+                  >edit</button>
+                  <button
+                    @click="dataDelete(prod, index)"
+                    class="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#deleteStatus"
+                  >delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <div class="overflow-auto">
-        <paginate
-          v-model="pageNum"
-          :page-count="numberPage"
-          :page-range="3"
-          :margin-pages="2"
-          :click-handler="clickCallback"
-          :prev-text="'Prev'"
-          :next-text="'Next'"
-          :container-class="'pagination'"
-          :page-class="'page-item'"
-          :prev-class="'page-item'"
-          :next-class="'page-item'"
-          :page-link-class="'page-link-item'"
-          :prev-link-class="'page-link-item'"
-          :next-link-class="'page-link-item'"
-          :active-class="'active-class'"
-          :hide-prev-next="true"
-        />
+        <div class="overflow-auto">
+          <paginate
+            v-model="pageNum"
+            :page-count="numberPage"
+            :page-range="3"
+            :margin-pages="2"
+            :click-handler="clickCallback"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'pagination'"
+            :page-class="'page-item'"
+            :prev-class="'page-item'"
+            :next-class="'page-item'"
+            :page-link-class="'page-link-item'"
+            :prev-link-class="'page-link-item'"
+            :next-link-class="'page-link-item'"
+            :active-class="'active-class'"
+            :hide-prev-next="true"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -198,6 +204,7 @@ export default {
         content: "",
         timeUpdate: ""
       },
+      userName: localStorage.getItem("userName"),
       pageNum: 1, // page so bao nhieu
       numberPage: 1, // so trang
 

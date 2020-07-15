@@ -31,10 +31,28 @@ class ListStoryController extends Controller
         ]);
         return response()->json($addComment);
     }
+    public function showComment(Request $request)
+    {
+
+        $users = DB::table('users')
+            ->join('comments', 'users.id', '=', 'comments.user_id')
+            ->where("stories_id", '=', $request->stories_id)
+            ->get();
+        return response()->json($users);
+    }
+
     public function category(Request $request)
     {
         // $listStory = $request->category;
         $listStory = Story::where("catelogy", $request->category)->paginate(8);
         return response()->json($listStory);
+    }
+    public function search(Request $request)
+    {
+        $search = Story::where("nameStory", 'like', '%' . $request->search . '%')->paginate(8);
+        return response()->json($search);
+
+        // $list = DB::table('Products')->where('name', 'like', '%' . $rq->search . '%')
+        //     ->paginate(5);
     }
 }

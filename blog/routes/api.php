@@ -26,6 +26,8 @@ Route::post("category", "ListStoryController@category");
 Route::get("listStory", "ListStoryController@show");
 Route::get('review/{$id}', 'ListStoryController@showReview');
 Route::post("comment", "ListStoryController@comment")->middleware('auth:api');
+Route::post('showComment', "ListStoryController@showComment");
+Route::post('search', "ListStoryController@search");
 
 
 Route::delete('deleteStory/{$id}', "storyController@deleteStory");

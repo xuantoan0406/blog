@@ -1,15 +1,42 @@
 <template>
   <div class="wrap-home">
     <div class="header">FULL LIST STORIES</div>
+
     <div class="content-stories">
-      <div class="img-story" v-for="(prod) in listStories" :key="prod.id">
-        <div class="img">
-          <router-link :to="{ name: 'aStory', params: { IdStory: prod.id }}">
-            <img :src="`/imgs/${prod.img}`" width="150px" height="200px" alt />
-          </router-link>
+      <div v-if="category">
+        <div class="img-story" v-for="prod in category" :key="prod.id">
+          <div class="img">
+            <router-link :to="{ name: 'aStory', params: { IdStory: prod.id }}">
+              <img :src="`/imgs/${prod.img}`" width="150px" height="200px" alt />
+            </router-link>
+          </div>
+          <div class="name">{{prod.nameStory}}</div>
+          <div class="chuong">Số Tập :{{prod.chap}}</div>
         </div>
-        <div class="name">{{prod.nameStory}}</div>
-        <div class="chuong">Số Tập :{{prod.chap}}</div>
+      </div>
+
+      <div v-else-if="search">
+        <div class="img-story" v-for="prod in search" :key="prod.id">
+          <div class="img">
+            <router-link :to="{ name: 'aStory', params: { IdStory: prod.id }}">
+              <img :src="`/imgs/${prod.img}`" width="150px" height="200px" alt />
+            </router-link>
+          </div>
+          <div class="name">{{prod.nameStory}}</div>
+          <div class="chuong">Số Tập :{{prod.chap}}</div>
+        </div>
+      </div>
+
+      <div v-else>
+        <div class="img-story" v-for="prod in listStories" :key="prod.id">
+          <div class="img">
+            <router-link :to="{ name: 'aStory', params: { IdStory: prod.id }}">
+              <img :src="`/imgs/${prod.img}`" width="150px" height="200px" alt />
+            </router-link>
+          </div>
+          <div class="name">{{prod.nameStory}}</div>
+          <div class="chuong">Số Tập :{{prod.chap}}</div>
+        </div>
       </div>
     </div>
     <div class="pt">
@@ -32,7 +59,6 @@
         :hide-prev-next="true"
       />
     </div>
-    <div>{{category}}</div>
   </div>
 </template>
 
@@ -42,14 +68,13 @@ export default {
   data() {
     return {
       listStoriesfull: [],
-      listStories: [],
+      listStories: "",
       pageNum: 1,
-
       numberPage: 2
     };
   },
   computed: {
-    ...mapState(["category"])
+    ...mapState(["category", "search"])
   },
 
   mounted() {
@@ -64,9 +89,6 @@ export default {
       this.pageNum = Number(pageNum);
     },
     dataListStories() {
-      if (this.category) {
-        this.listStories = this.category;
-      }
       axios
         .get("/api/listStory?page=" + this.pageNum)
         .then(response => {

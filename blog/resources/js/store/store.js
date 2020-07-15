@@ -6,9 +6,13 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     userName: "",
-    category: ""
+    category: "",
+    search: ""
   },
   mutations: {
+    showSearch(state, search) {
+      state.search = search;
+    },
     showCategory(state, list) {
       state.category = list;
     },
@@ -24,6 +28,9 @@ const store = new Vuex.Store({
     },
     showCategory({ commit }, list) {
       commit("showCategory", list);
+    },
+    showSearch({ commit }, search) {
+      commit("showSearch", search);
     }
   },
   modules: {}
